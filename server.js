@@ -1,6 +1,7 @@
 'use strict'
 const Hapi = require("hapi");
 const redis = require("redis");
+const route= require('./route/route');
 
 let server = new Hapi.Server();
 let client = redis.createClient();
@@ -11,7 +12,8 @@ server.connection({
 
 client.on('connect', () => {
     console.log('connected to redis');
-}
+    route(server,client);
+});
 
 function startServer(server) {
     server.start(function () {
