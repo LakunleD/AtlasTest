@@ -13,7 +13,13 @@ server.connection({
 client.on('connect', () => {
     console.log('connected to redis');
     route(server,client);
+    startServer(server);
 });
+
+client.on('error', (error)=>{
+    console.log('error occured'+ error);
+    return;
+})
 
 function startServer(server) {
     server.start(function () {
@@ -21,5 +27,3 @@ function startServer(server) {
         server.log('info', 'Server running at: ' + server.info.uri);
     });
 }
-
-startServer(server);
